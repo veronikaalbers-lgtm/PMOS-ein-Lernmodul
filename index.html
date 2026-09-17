@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMOS & Ernährung – interaktiv lernen</title>
+  <meta name="description" content="Ein kurzer interaktiver Lernpfad zu PMOS, Ernährung und seriöser Gesundheitskommunikation.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%233e626b'/%3E%3Cpath d='M18 39c9-1 12-12 28-15-4 15-12 23-28 15Z' fill='%2378bcb0'/%3E%3Ccircle cx='20' cy='21' r='4' fill='%23ef9a8e'/%3E%3C/svg%3E">
+  <style>
+    :root{--ink:#183941;--petrol:#3e626b;--mint:#78bcb0;--coral:#ef9a8e;--cream:#f7f3ea;--paper:#fffdf8;--line:#d7e1de;--muted:#59747a}
+    *{box-sizing:border-box} body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+    button{font:inherit}.shell{width:min(1120px,calc(100% - 32px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .progress{height:5px;background:#dce6e2;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;width:20%;background:var(--coral);transition:width .35s ease}
+    main{padding:44px 0 80px}.intro{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;min-height:640px}
+    .eyebrow{color:var(--coral);font-weight:800;letter-spacing:.09em;text-transform:uppercase;font-size:.82rem}h1{font-family:Georgia,serif;font-size:clamp(2.8rem,6vw,5.7rem);line-height:.98;margin:.35em 0 .28em;letter-spacing:-.04em}h2{font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;margin:.2em 0 .5em}p{font-size:1.08rem}
+    .lead{font-size:1.3rem;max-width:680px}.portrait{position:relative}.portrait img{width:100%;height:620px;object-fit:cover;object-position:48% 34%;border-radius:180px 180px 28px 28px;filter:saturate(.88)}.portrait:after{content:"";position:absolute;inset:auto -14px -14px 14px;height:44%;border:2px solid var(--coral);border-radius:24px;z-index:-1}
+    .start,.next,.reset{border:0;background:var(--petrol);color:white;padding:15px 22px;border-radius:999px;font-weight:750;cursor:pointer;box-shadow:0 8px 24px #29484f22}.start:hover,.next:hover,.reset:hover{background:#294d55}.start:focus-visible,.next:focus-visible,.reset:focus-visible,.choice:focus-visible,.reveal:focus-visible{outline:4px solid #ef9a8e88;outline-offset:3px}
+    .section{display:none;min-height:650px;padding:56px 0}.section.active{display:block}.kicker{font-size:.86rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--coral)}
+    .terms{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0 42px}.term{background:var(--petrol);color:white;border-radius:24px;padding:26px}.term h3{font-family:Georgia,serif;font-size:1.65rem;margin:0 0 10px}.term p{margin:0;font-size:1rem}.term small{display:block;margin-top:14px;color:#dce9e6}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:34px 0}.reveal{min-height:235px;border:1px solid var(--line);border-radius:24px;background:var(--paper);padding:24px;text-align:left;cursor:pointer;color:var(--ink);transition:transform .2s,border-color .2s}.reveal:hover{transform:translateY(-4px);border-color:var(--mint)}.reveal strong{font-family:Georgia,serif;font-size:1.5rem;display:block;margin-bottom:12px}.reveal .answer{display:none;color:var(--muted)}.reveal.open{background:var(--petrol);color:white}.reveal.open .prompt{display:none}.reveal.open .answer{display:block;color:white}
+    .plate-wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:42px;align-items:center}.plate{aspect-ratio:1;background:var(--paper);border-radius:50%;border:18px solid white;box-shadow:0 16px 55px #27464c20;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.zone{display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font-weight:800;color:white;transition:.25s}.zone:nth-child(1){grid-row:span 2;background:#72aa8b}.zone:nth-child(2){background:#d79d66}.zone:nth-child(3){background:#657d9c}.zone.empty{background:#dce5e1;color:#70858a}.choices{display:flex;flex-wrap:wrap;gap:10px}.choice{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:12px 16px;border-radius:999px;cursor:pointer}.choice[aria-pressed="true"]{background:var(--petrol);color:white;border-color:var(--petrol)}.hint{color:var(--muted);font-size:.95rem}
+    .quiz{max-width:760px}.question{border-top:1px solid var(--line);padding:26px 0}.question p{font-weight:750}.answers{display:grid;gap:10px}.answers button{padding:14px 16px;text-align:left;border:1px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;color:var(--ink)}.answers button.good{border-color:#4b8b69;background:#e3f2e8}.answers button.bad{border-color:#c46960;background:#fbe9e6}.feedback{min-height:28px;color:var(--muted);margin-top:10px}
+    .result{background:var(--petrol);color:white;border-radius:28px;padding:36px;margin-top:28px}.result[hidden]{display:none}.source{border-top:1px solid var(--line);margin-top:70px;padding-top:24px;color:var(--muted);font-size:.88rem}.source a{color:inherit}.navrow{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-top:36px}.counter{font-weight:750;color:var(--muted)}
+    @media(max-width:780px){.intro,.plate-wrap,.terms{grid-template-columns:1fr}.intro{gap:28px}.portrait{order:-1}.portrait img{height:390px;border-radius:120px 120px 20px 20px}.cards{grid-template-columns:1fr}.section{padding-top:38px}.plate{max-width:430px;margin:auto}.top span:last-child{display:none}h1{font-size:3.25rem}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top"><span>PMOS · Ernährung · Lernimpuls</span><span>Wissenschaftlich fundiert, alltagstauglich erklärt</span></header>
+    <div class="progress" aria-label="Lernfortschritt"><span id="bar"></span></div>
+    <main>
+      <section class="intro section active" data-step="1">
+        <div>
+          <div class="eyebrow">Interaktiv lernen · ca. 4 Minuten</div>
+          <h1>Was Ernährung bei PMOS leisten kann</h1>
+          <p class="lead">Keine Wunderdiät. Keine Schuldzuweisung. Stattdessen ein kurzer Lernpfad darüber, was im Alltag wirklich Orientierung gibt.</p>
+          <button class="start" data-next>Wissensreise starten</button>
+        </div>
+        <div class="portrait"><img src="portrait.jpg" alt="Portrait der Ernährungsexpertin"></div>
+      </section>
+
+      <section class="section" data-step="2">
+        <div class="kicker">01 · Einordnen</div>
+        <h2>Zwei Begriffe, die bei PMOS häufig auftauchen</h2>
+        <div class="terms">
+          <article class="term"><h3>Androgene</h3><p>Androgene sind Hormone wie Testosteron. Auch Frauen bilden sie. Erhöhte Werte oder eine verstärkte Wirkung können sich durch Akne, stärkere Körperbehaarung oder hormonell bedingten Haarausfall zeigen.</p><small>Ein mögliches Diagnosemerkmal, kein alleiniger Beweis für PMOS.</small></article>
+          <article class="term"><h3>AMH-Wert</h3><p>Das Anti-Müller-Hormon entsteht in kleinen Eibläschen der Eierstöcke. Es dient als Marker für die ovarielle Reserve und hilft bei einer Kinderwunschbehandlung, die mögliche Reaktion auf eine hormonelle Stimulation einzuschätzen.</p><small>Der Wert zeigt weder die genaue Zahl oder Qualität befruchtungsfähiger Eizellen noch zuverlässig die Chance auf eine natürliche Schwangerschaft. Bei PMOS kann er erhöht sein und reicht allein nicht zur Diagnose.</small></article>
+        </div>
+        <h2>Drei Aussagen, die einen zweiten Blick verdienen</h2>
+        <p>Klicke auf jede Karte und prüfe, was dahintersteckt.</p>
+        <div class="cards">
+          <button class="reveal"><strong>„Es gibt eine spezielle PMOS-Diät.“</strong><span class="prompt">Aussage aufdecken</span><span class="answer">Die Leitlinie beschreibt keine einzelne PMOS-Diät. Sinnvoll ist eine ausgewogene Ernährung, die zur Person, zum Alltag und zu möglichen Stoffwechselrisiken passt.</span></button>
+          <button class="reveal"><strong>„Das Körpergewicht erklärt alles.“</strong><span class="prompt">Aussage aufdecken</span><span class="answer">PMOS betrifft Frauen in unterschiedlichen Körpern. Stoffwechselrisiken können unabhängig vom Gewicht bestehen. Gewicht allein ersetzt keine Diagnostik.</span></button>
+          <button class="reveal"><strong>„Ein Supplement löst das Problem.“</strong><span class="prompt">Aussage aufdecken</span><span class="answer">PMOS hat verschiedene Ausprägungen. Einzelne Produkte behandeln nicht automatisch das gesamte Syndrom. Entscheidungen gehören in eine individuelle Beratung.</span></button>
+        </div>
+        <div class="navrow"><span class="counter">1 von 3 Lernstationen</span><button class="next" data-next>Zum Alltagsteller</button></div>
+      </section>
+
+      <section class="section" data-step="3">
+        <div class="kicker">02 · Ausprobieren</div>
+        <h2>Baue einen Teller, der länger satt halten kann</h2>
+        <div class="plate-wrap">
+          <div class="plate" aria-label="Interaktiver Teller">
+            <div class="zone empty" data-zone="veg">Gemüse & Ballaststoffe</div>
+            <div class="zone empty" data-zone="protein">Protein</div>
+            <div class="zone empty" data-zone="carb">Kohlenhydrate</div>
+          </div>
+          <div>
+            <p>Wähle je eine Komponente. Es geht nicht um Perfektion, sondern um eine flexible Struktur.</p>
+            <div class="choices">
+              <button class="choice" data-kind="veg" data-label="Ofengemüse">Ofengemüse</button>
+              <button class="choice" data-kind="veg" data-label="Salat + Hülsenfrüchte">Salat</button>
+              <button class="choice" data-kind="protein" data-label="Linsen">Linsen</button>
+              <button class="choice" data-kind="protein" data-label="Joghurt / Tofu">Joghurt oder Tofu</button>
+              <button class="choice" data-kind="carb" data-label="Vollkorn">Vollkorn</button>
+              <button class="choice" data-kind="carb" data-label="Kartoffeln">Kartoffeln</button>
+            </div>
+            <p class="hint">Die Zusammenstellung ist ein Lernmodell, keine individuelle Ernährungstherapie.</p>
+            <button class="next" data-next>Wissen testen</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-step="4">
+        <div class="kicker">03 · Prüfen</div>
+        <h2>Der 3-Fragen-Wissenscheck</h2>
+        <div class="quiz">
+          <div class="question" data-correct="b"><p>Welche Aussage passt zur Leitlinie?</p><div class="answers"><button data-answer="a">Jede Frau mit PMOS braucht dieselbe Ernährung.</button><button data-answer="b">Ernährung soll ausgewogen und individuell passend sein.</button></div><div class="feedback"></div></div>
+          <div class="question" data-correct="a"><p>Worauf sollte die Betreuung zusätzlich achten?</p><div class="answers"><button data-answer="a">Zuckerstoffwechsel und psychisches Wohlbefinden</button><button data-answer="b">Nur auf die Zahl auf der Waage</button></div><div class="feedback"></div></div>
+          <div class="question" data-correct="b"><p>Was ist bei PMOS am hilfreichsten?</p><div class="answers"><button data-answer="a">Eine schnelle Universallösung</button><button data-answer="b">Eine langfristig umsetzbare, fachlich begleitete Strategie</button></div><div class="feedback"></div></div>
+          <div class="result" id="result" hidden><h2 id="score">Geschafft</h2><p>Gute Gesundheitskommunikation macht komplexe Themen verständlich, ohne falsche Sicherheit zu erzeugen.</p><button class="reset">Noch einmal starten</button></div>
+        </div>
+      </section>
+
+      <footer class="source">
+        <strong>Fachliche Grundlage:</strong> S2k-Patientinnenleitlinie zur Diagnostik und Therapie des Polyendokrinen Metabolischen Ovarialsyndroms (PMOS), Stand 2026. Inhalte gekürzt und allgemeinverständlich aufbereitet. Diese Seite ersetzt keine medizinische Diagnose oder persönliche Ernährungsberatung.
+      </footer>
+    </main>
+  </div>
+  <script>
+    const sections=[...document.querySelectorAll('.section')], bar=document.getElementById('bar'); let step=0;
+    function show(n){step=Math.max(0,Math.min(n,sections.length-1));sections.forEach((s,i)=>s.classList.toggle('active',i===step));bar.style.width=((step+1)/sections.length*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
+    document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>show(step+1)));
+    document.querySelectorAll('.reveal').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('open')));
+    document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.choice[data-kind="'+b.dataset.kind+'"]').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');const z=document.querySelector('[data-zone="'+b.dataset.kind+'"]');z.textContent=b.dataset.label;z.classList.remove('empty')}));
+    let answered=0, correct=0;
+    document.querySelectorAll('.question').forEach(q=>q.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{if(q.dataset.done)return;q.dataset.done='1';answered++;const ok=b.dataset.answer===q.dataset.correct;if(ok)correct++;b.classList.add(ok?'good':'bad');q.querySelector('.feedback').textContent=ok?'Richtig.':'Noch nicht. Die andere Antwort passt besser zur Leitlinie.';if(answered===3){const r=document.getElementById('result');r.hidden=false;document.getElementById('score').textContent=correct+' von 3 richtig'}})));
+    document.querySelector('.reset').addEventListener('click',()=>location.reload()); show(0);
+  </script>
+</body>
+</html>
